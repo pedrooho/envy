@@ -1,0 +1,24 @@
+<div class="card-columns">
+  <a
+  routerLink="/open-envelope"
+  routerLinkActive="router-link-exact-active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <div class="card card-style">
+      <div class="envelope"><img class="card-img-top" src="assets/img/envelope.png" alt=""></div>
+      <div class="card-body">    
+        <h1 class="card-title">CASA</h1>
+      </div>
+    </div>
+  </a>
+  <a mat-flat-button
+  (click)="openNewEnvelope()"
+  >
+    <div class="card card-style">
+      <div class="add"><img class="card-img-top add-img" src="assets/img/envelope-add.png" alt=""></div>
+      <div class="card-body">    
+        <h1 class="card-title">New</h1>
+      </div>
+    </div>
+  </a>
+</div>

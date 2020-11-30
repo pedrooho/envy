@@ -1,0 +1,45 @@
+<div class="body row">
+    <div class="col-6">
+        <form [formGroup]="frmUser" class="p-grid form-group" onSubmit={this.save}>
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <input type="text" matInput placeholder="Name" formControlName="name" maxlength="150"
+                        appShowErrors />
+                </mat-form-field>
+            </div>
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <input type="text" matInput placeholder="Username" formControlName="username" maxlength="25">
+                </mat-form-field>
+            </div>
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput formControlName="email">
+                    <mat-error *ngIf="frmUser.hasError('email') && frmUser.hasError('required')">
+                        Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="frmUser.hasError('required')">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <input type="password" matInput placeholder="Password" formControlName="password" maxlength="50">
+                </mat-form-field>
+            </div>
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <input type="date" matInput placeholder="Birthdate" formControlName="birthdate">
+                </mat-form-field>
+            </div>
+        </form>
+        <div class="bar-buttons col-10">
+            <div class="button">
+                <button class="button" (click)="this.limpar()" mat-raised-button mat-button>Limpar</button>
+                <button class="button" mat-raised-button type="submit" mat-button>Save</button>
+            </div>
+        </div>
+    </div>
+</div>

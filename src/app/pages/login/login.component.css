@@ -1,0 +1,43 @@
+.mat-form-field {
+    width: 100%;
+    min-width: 300px;
+  }
+
+  h1{
+      text-align: center;
+  }
+  
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .error {
+    padding: 16px;
+    width: 300px;
+    color: white;
+    background-color: red;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: flex-end;
+  }
+   
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 84.1%;
+    justify-content: center;
+  }
+  
+  .login {
+    margin-left: auto;
+    margin-right: auto; 
+  }
+  
+  a:link {
+    margin-left: 15px;
+    font-size: 13px;
+    color: red;
+  }

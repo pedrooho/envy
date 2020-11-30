@@ -1,0 +1,20 @@
+.body{
+    margin: 35px;
+    margin-top: 10px;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .inputLength {
+    width: 100%;
+    margin: 7px;
+  }
+
+  .button {
+    display: flex;
+    justify-content: flex-end;
+  }
