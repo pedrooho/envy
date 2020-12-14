@@ -29,5 +29,10 @@ export class TransactionService{
   getById(id: number) {
     return this.http.get(this.baseUrl +'/'+ id);
   }
+  
+  getReport(model: any) {
+    return this.http.get(this.baseUrl + '?createdOnFrom=' + model.createdOnFrom + 
+    '&createdOnTo='+ model.createdOnTo +'&envelopeId='+ model.envelopeId);
+  }
 
 }

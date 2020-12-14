@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/services/account.service';
 import { EnvelopeService } from 'src/app/services/envelope.service';
 
 @Component({
@@ -9,8 +11,11 @@ import { EnvelopeService } from 'src/app/services/envelope.service';
 export class ReportComponent implements OnInit {
   lstEnvelopes: any;
   backgroundColor = [];
+  frmReport: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService,
     private envelopeService: EnvelopeService,
   ) { }
 
@@ -27,14 +32,18 @@ export class ReportComponent implements OnInit {
     { data: [], label: '' },
   ];
 
-  ngOnInit(): void {
-    this.loadEnvelopes();
-  } 
-
-  loadEnvelopes(){
-    this.envelopeService.findAll().subscribe( resul => {
-      this.setValuesChart(resul);
+  private buildForm(): void {
+    this.frmReport = this.formBuilder.group({
+      userId: [null, Validators.required],
+      createdOnFrom: [null, Validators.required],
+      createdOnTo: [null, Validators.required],
     });
+
+    this.frmReport.get('userId').setValue(this.accountService.currentUser.id);
+  }
+
+  ngOnInit(): void {
+    this.buildForm();
   }
 
   setValuesChart(lstEnvelopes: any){
@@ -69,5 +78,13 @@ export class ReportComponent implements OnInit {
         cor += hexadecimais[Math.floor(Math.random() * 16)];
     }
     return cor;
+  }
+
+  search(){
+    this.envelopeService.getByIdUser(this.accountService.currentUser.id).subscribe( resul => {
+      this.setValuesChart(resul);
+    });
+  }
 }
-}
+
+

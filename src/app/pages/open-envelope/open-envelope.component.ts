@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { EnvelopeService } from 'src/app/services/envelope.service';
@@ -15,8 +16,10 @@ export class OpenEnvelopeComponent implements OnInit {
   lstTransaction: any;
   envelopeId: number;
   envelope: any;
+  frmDateCreate: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private envelopeService: EnvelopeService,
@@ -25,8 +28,18 @@ export class OpenEnvelopeComponent implements OnInit {
     this.route.params.subscribe(params => this.envelopeId = params['id']);
   }
 
+  private buildForm(): void {
+    this.frmDateCreate = this.formBuilder.group({
+      createdOnFrom: [null, Validators.required],
+      createdOnTo: [null, Validators.required],
+      envelopeId: [null, Validators.required],
+    });
+
+    this.frmDateCreate.get('envelopeId').setValue(this.envelopeId);
+  }
+
   ngOnInit(): void {
-    this.loadTransactions();
+    this.buildForm();
     this.loadEnvelope();
   }
 
@@ -67,7 +80,7 @@ export class OpenEnvelopeComponent implements OnInit {
   }
 
   loadTransactions(){
-    this.transactionService.getByIdEnvelope(this.envelopeId).subscribe( resul => {
+    this.transactionService.getReport(this.frmDateCreate.getRawValue()).subscribe( resul => {
       console.log(resul);
       this.lstTransaction = resul;
     });

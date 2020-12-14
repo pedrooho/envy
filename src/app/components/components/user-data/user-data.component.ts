@@ -48,7 +48,11 @@ export class UserDataComponent implements OnInit {
       newPassword: [null, Validators.required]
     });
 
-    this.changePasswordForm.get('userId').setValue(this.accountService.currentUser.id);
+    if(this.accountService.currentUser !== undefined && this.accountService.currentUser.id !== undefined)
+      this.changePasswordForm.get('userId').setValue(this.accountService.currentUser.id);      
+    else 
+      this.changePasswordForm.get('userId').setValidators(Validators.required);
+
   }
 
   save(): void{
@@ -83,12 +87,14 @@ export class UserDataComponent implements OnInit {
   }
 
   edit(){
-    if(this.accountService.currentUser.id != null){
+    if(this.accountService.currentUser === undefined){
+      this.isEdit = false;
+    }
+    else{
       this.isEdit = true;
       this.loadUser();
     }
-    else
-      this.isEdit = false;
+      
   }
   
   loadUser(){
