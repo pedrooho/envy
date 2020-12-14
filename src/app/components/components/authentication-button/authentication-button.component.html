@@ -1,3 +1,5 @@
-<app-login-button *ngIf="!this.accountService.loggedIn()"></app-login-button>
+<app-login-button *ngIf="!loggedIn()">
+</app-login-button>
 
-<app-logout-button *ngIf="this.accountService.loggedIn()"></app-logout-button>
+<app-logout-button *ngIf="loggedIn()">
+</app-logout-button> 

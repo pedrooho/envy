@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EnvelopeService } from '../../services/envelope.service';
 import { TypeEnvelopeEnum } from '../../enum/type-envelope.enum'
 import { AccountService } from 'src/app/services/account.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 @Component({
   selector: 'app-create-envelope',
@@ -18,7 +19,8 @@ export class CreateEnvelopeComponent implements OnInit {
     private envelopeService: EnvelopeService,
     private _snackBar: MatSnackBar,
     private accountService: AccountService,
-    public dialogRef: MatDialogRef<CreateEnvelopeComponent>
+    public dialogRef: MatDialogRef<CreateEnvelopeComponent>,
+    private alertify: AlertifyService
   ) { }
 
   envelopeTypeEnum = TypeEnvelopeEnum;
@@ -49,22 +51,35 @@ export class CreateEnvelopeComponent implements OnInit {
   }
 
   save(): void{
+    let envelope:any = this.createEnvelopeForm.value;
     if (this.createEnvelopeForm.controls.id.value === null) {
-        this.envelopeService.create(this.createEnvelopeForm.getRawValue()).toPromise().then(resul => {
+        this.envelopeService.create(envelope).toPromise().then(resul => {
           if(resul){
             this._snackBar.open("Envelope inserido com sucesso!", null, {
               duration: 2000,
             });
           }
         }, error => {
-          console.log(error);
+          var errorMsg;
+          if(error.subErrors != null){
+            errorMsg = error.subErrors[0].message;
+          } else {
+            errorMsg = error.message
+          }
+          this.alertify.error(errorMsg);
         });
     } else {
-        this.envelopeService.update(this.createEnvelopeForm.getRawValue()).toPromise().then(resul => {
+        this.envelopeService.update(envelope).toPromise().then(resul => {
 
   
         }, error => {
-
+            var errorMsg;
+            if(error.subErrors != null){
+              errorMsg = error.subErrors[0].message;
+            } else {
+              errorMsg = error.message
+            }
+            this.alertify.error(errorMsg);
         });
     }
   }
