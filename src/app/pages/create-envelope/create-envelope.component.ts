@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EnvelopeService } from '../../services/envelope.service';
+import { TypeEnvelopeEnum } from '../../enum/type-envelope.enum'
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-create-envelope',
@@ -15,11 +17,13 @@ export class CreateEnvelopeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private envelopeService: EnvelopeService,
     private _snackBar: MatSnackBar,
+    private accountService: AccountService,
     public dialogRef: MatDialogRef<CreateEnvelopeComponent>
   ) { }
 
+  envelopeTypeEnum = TypeEnvelopeEnum;
   createEnvelopeForm: FormGroup;
-  flagSavings = false;
+  flagGoal = false;
 
   ngOnInit(): void {
     this.buildForm();
@@ -36,6 +40,8 @@ export class CreateEnvelopeComponent implements OnInit {
       dueDate: [null, Validators.required],
       userId: [null, Validators.nullValidator]
     });
+    this.createEnvelopeForm.get('userId').setValue(this.accountService.currentUser.id);
+
   }
 
   onNoClick(): void {
@@ -51,9 +57,7 @@ export class CreateEnvelopeComponent implements OnInit {
             });
           }
         }, error => {
-          this._snackBar.open(error.error.message, null, {
-            duration: 4000,
-          });
+          console.log(error);
         });
     } else {
         this.envelopeService.update(this.createEnvelopeForm.getRawValue()).toPromise().then(resul => {
@@ -65,8 +69,8 @@ export class CreateEnvelopeComponent implements OnInit {
     }
   }
 
-  alterEnvelopeType(value) {
-    this.flagSavings = value;
+  setFlagGoal(value) {
+    this.flagGoal = value;
   }
 
 }

@@ -17,7 +17,7 @@ export class LogoutButtonComponent implements OnInit {
   }
 
   logout(){
-    this.accountService.loggedIn = false;
+    this.accountService.logOut();
   }
 
 }

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TransactionService{
 
-  baseUrl = 'https://envy-api1.herokuapp.com/transaction/';
+  baseUrl = 'https://envy-api1.herokuapp.com/transaction';
 
   constructor(private http: HttpClient) { }
   
@@ -22,8 +22,12 @@ export class TransactionService{
     return this.http.put(this.baseUrl, model);
   }
 
+  getByIdEnvelope(envelopeId: number) {
+    return this.http.get(this.baseUrl +'?envelopeId='+ envelopeId);
+  }
+
   getById(id: number) {
-    return this.http.get(this.baseUrl + id);
+    return this.http.get(this.baseUrl +'/'+ id);
   }
 
 }

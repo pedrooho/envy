@@ -9,7 +9,6 @@ import { User } from '../models/User';
 })
 export class AccountService {
  
-  loggedIn = false;
   jwtHelper = new JwtHelperService();
   baseUrl = 'https://envy-api1.herokuapp.com/';
   currentUser: User;
@@ -25,12 +24,23 @@ export class AccountService {
         if (token) {
           localStorage.setItem('token', token);
           this.decodedToken = this.jwtHelper.decodeToken(token);
-          this.currentUser = new User(this.decodedToken.sub, this.decodedToken.id);
+          this.currentUser = new User( this.decodedToken.id, this.decodedToken.sub);
           localStorage.setItem('user', JSON.stringify(this.currentUser));
           return response;
         }
       })
     );
+  }
+
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  logOut(){
+    this.currentUser = new User(null,null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
  
   forgotPassword(model: any){

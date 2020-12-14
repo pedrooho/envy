@@ -1,5 +1,7 @@
 <div class="body row">
     <div class="col-6">
+        <h1 *ngIf="false">Creatte account</h1>
+        <h1 *ngIf="true">Profile</h1>
         <form [formGroup]="frmUser" class="p-grid form-group">
             <div class="col-10">
                 <mat-form-field class="inputLength">
@@ -24,7 +26,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-10">
+            <div *ngIf="this.isEdit === false" class="col-10">
                 <mat-form-field class="inputLength">
                     <input type="password" matInput placeholder="Password" formControlName="password" maxlength="50">
                 </mat-form-field>
@@ -41,5 +43,27 @@
                 <button class="button" (click)="this.save()" mat-raised-button mat-button>Save</button>
             </div>
         </div>
+    </div>
+    <div *ngIf="this.isEdit"  class="col-6">
+        <h1>Change Password</h1>
+        <form [formGroup]="changePasswordForm" class="p-grid form-group">
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <input type="password" matInput placeholder="Previous password" formControlName="previousPassword" maxlength="150"
+                        appShowErrors />
+                </mat-form-field>
+            </div>
+            <div class="col-10">
+                <mat-form-field class="inputLength">
+                    <input type="password" matInput placeholder="New password" formControlName="newPassword" maxlength="150"
+                        appShowErrors />
+                </mat-form-field>
+            </div>
+            <div class="bar-buttons col-10">
+                <div class="button">
+                    <button class="button" (click)="this.changePassword()" mat-raised-button mat-button>Save</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

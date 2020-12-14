@@ -22,4 +22,8 @@ export class UserService{
     return this.http.patch(this.baseUrl, model);
   }
 
+  getById(id :number){
+    return this.http.get(this.baseUrl + id);
+  }
+
 }

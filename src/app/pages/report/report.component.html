@@ -3,8 +3,9 @@
         <h1>Expected</h1>
         <div class="chart"> 
             <canvas baseChart 
-                    [data] = "pieChartData" 
-                    [labels] = "pieChartLabels" 
+                    [data] = "pieChartDataExpected" 
+                    [colors]="chartColors"
+                    [labels] = "chartLabels" 
                     [chartType] = "pieChartType"> 
             </canvas> 
         </div>
@@ -13,10 +14,10 @@
         <h1>Reality</h1>
         <div class="chart"> 
             <canvas baseChart 
-                    [data] = "pieChartData" 
-                    [labels] = "pieChartLabels" 
-                    [chartType] = "pieChartType"> 
-                    
+                    [data] = "pieChartDataReality" 
+                    [colors]="chartColors"
+                    [labels] = "chartLabels" 
+                    [chartType] = "pieChartType">                     
             </canvas> 
         </div>
     </div>

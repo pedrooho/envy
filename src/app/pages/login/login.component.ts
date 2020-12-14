@@ -41,10 +41,11 @@ export class LoginComponent implements OnInit {
   login(){
     this.accountService.login(this.loginForm.getRawValue()).subscribe(next => {
       this.alertify.success('Logged in successfully');
+      this.router.navigate(['']);
     }, error => {
       this.alertify.error(error.message);
     }, () => {
-      this.router.navigate(['/findTasks']);
+      this.router.navigate(['']);
     });
   }
 
