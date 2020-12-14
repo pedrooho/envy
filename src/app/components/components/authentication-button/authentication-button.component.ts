@@ -9,11 +9,12 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class AuthenticationButtonComponent implements OnInit {
 
-  constructor(
-    public accountService: AccountService,
-  ) { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
   }
 
+  loggedIn() {
+    return this.accountService.loggedIn();
+  }
 }

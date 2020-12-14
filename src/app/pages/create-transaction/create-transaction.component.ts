@@ -54,22 +54,34 @@ export class CreateTransactionComponent implements OnInit {
 
   save(): void{
     if (this.createTransactionForm.controls.id.value === null) {
-        this.transactionService.create(this.createTransactionForm.getRawValue()).toPromise().then(resul => {
+        this.transactionService.create(this.createTransactionForm.value).toPromise().then(resul => {
           if(resul){
             this.alertify.success('Transaction added successfully');
             this.dialogRef.close(true);
           }
         }, error => {
-          console.log(error);
+          var errorMsg;
+          if(error.subErrors != null){
+            errorMsg = error.subErrors[0].message;
+          } else {
+            errorMsg = error.message
+          }
+          this.alertify.error(errorMsg);
         });
     } else {
-        this.transactionService.update(this.createTransactionForm.getRawValue()).toPromise().then(resul => {
+        this.transactionService.update(this.createTransactionForm.value).toPromise().then(resul => {
           if(resul){
             this.alertify.success('Transaction added successfully');
             this.dialogRef.close(true);
           }  
         }, error => {
-          console.log(error);
+          var errorMsg;
+          if(error.subErrors != null){
+            errorMsg = error.subErrors[0].message;
+          } else {
+            errorMsg = error.message
+          }
+          this.alertify.error(errorMsg);
         });
     }
   }

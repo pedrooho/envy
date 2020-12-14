@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { User } from '../models/User';
 export class AccountService {
  
   jwtHelper = new JwtHelperService();
-  baseUrl = 'https://envy-api1.herokuapp.com/';
+  baseUrl = environment.apiUrl;
   currentUser: User;
   decodedToken: any;
  
@@ -38,9 +39,10 @@ export class AccountService {
   }
 
   logOut(){
-    this.currentUser = new User(null,null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.decodedToken = null;
+    this.currentUser = null;
   }
  
   forgotPassword(model: any){
@@ -54,4 +56,5 @@ export class AccountService {
   register(model: any){
     return this.http.post(this.baseUrl + 'auth/register', model);
   }
+  
 }

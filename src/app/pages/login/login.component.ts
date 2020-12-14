@@ -10,6 +10,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
  
   model = new LoginModel({});
