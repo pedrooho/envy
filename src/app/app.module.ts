@@ -38,6 +38,7 @@ import { CreateTransactionComponent } from './pages/create-transaction/create-tr
 import { UserDataComponent } from './components/components/user-data/user-data.component';
 import { ReportComponent } from './pages/report/report.component';
 import {ChartsModule} from 'ng2-charts';
+import {AlertifyService} from './services/alertify.service';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,9 @@ import {ChartsModule} from 'ng2-charts';
     ReactiveFormsModule,
     NgxCurrencyModule,
     ChartsModule,
+  ],
+  providers: [
+    AlertifyService
   ],
   bootstrap: [AppComponent],
 })
