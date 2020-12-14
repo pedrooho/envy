@@ -18,3 +18,8 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  h1{
+    text-align: center;
+    padding: 0;
+  }

@@ -40,7 +40,7 @@ const routes: Routes = [
     component: EnvelopesComponent,
   },
   {
-    path: 'open-envelope',
+    path: 'open-envelope/:id',
     component: OpenEnvelopeComponent,
   },
 ];

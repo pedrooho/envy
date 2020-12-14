@@ -9,7 +9,7 @@
       Home
     </a>
   </div>
-  <div class="nav-item">
+  <div  *ngIf="this.accountService.loggedIn()" class="nav-item">
     <a
       routerLink="/envelopes"
       class="nav-link"
@@ -18,7 +18,7 @@
       Envelopes
     </a>
   </div>
-  <div class="nav-item">
+  <div *ngIf="this.accountService.loggedIn()" class="nav-item">
     <a
       routerLink="/report"
       class="nav-link"
@@ -27,7 +27,7 @@
       Report
     </a>
   </div>
-  <div class="nav-item">
+  <div *ngIf="this.accountService.loggedIn()" class="nav-item">
     <a
       routerLink="/profile"
       class="nav-link"

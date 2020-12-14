@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-main-nav',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-nav.component.css'],
 })
 export class MainNavComponent implements OnInit {
-  constructor() {}
+  constructor(
+    public accountService: AccountService,
+  ) {}
 
   ngOnInit(): void {}
+
+  
 }

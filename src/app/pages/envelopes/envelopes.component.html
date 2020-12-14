@@ -1,16 +1,19 @@
 <div class="card-columns">
-  <a
-  routerLink="/open-envelope"
-  routerLinkActive="router-link-exact-active"
-  [routerLinkActiveOptions]="{ exact: true }"
-  >
-    <div class="card card-style">
-      <div class="envelope"><img class="card-img-top" src="assets/img/envelope.png" alt=""></div>
-      <div class="card-body">    
-        <h1 class="card-title">CASA</h1>
+  <div *ngFor="let envelope of lstEnvelopes; let i = index">
+    <a 
+    routerLink= "/open-envelope/{{envelope.id}}"
+    routerLinkActive="router-link-exact-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <div class="card card-style">
+        <div class="envelope"><img class="card-img-top" src="assets/img/envelope.png" alt=""></div>
+        <div class="card-body">    
+          <h1 class="card-title">{{envelope.title}}</h1>
+        </div>
       </div>
-    </div>
-  </a>
+    </a>
+  </div>
+
   <a mat-flat-button
   (click)="openNewEnvelope()"
   >

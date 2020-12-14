@@ -13,7 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginButtonComponent } from './components/components/login-button/login-button.component';
 import { SignupButtonComponent } from './components/components/signup-button/signup-button.component';
 import { LogoutButtonComponent } from './components/components/logout-button/logout-button.component';
@@ -30,7 +30,7 @@ import { CreateAccountComponent } from './pages/create-account/create-account.co
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { EnvelopesComponent } from './pages/envelopes/envelopes.component';
 import { CreateEnvelopeComponent } from './pages/create-envelope/create-envelope.component';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { OpenEnvelopeComponent } from './pages/open-envelope/open-envelope.component';
@@ -39,6 +39,8 @@ import { UserDataComponent } from './components/components/user-data/user-data.c
 import { ReportComponent } from './pages/report/report.component';
 import {ChartsModule} from 'ng2-charts';
 import {AlertifyService} from './services/alertify.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthInterceptor } from '../app/interceptions/auth-interceptor'
 
 @NgModule({
   declarations: [
@@ -82,8 +84,12 @@ import {AlertifyService} from './services/alertify.service';
     ReactiveFormsModule,
     NgxCurrencyModule,
     ChartsModule,
+    MatSnackBarModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
     AlertifyService
   ],
   bootstrap: [AppComponent],

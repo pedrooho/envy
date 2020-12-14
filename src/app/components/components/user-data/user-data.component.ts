@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from '../../../services/account.service';
+import { UserService } from '../../../services/user.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-user-data',
@@ -10,9 +14,14 @@ export class UserDataComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
+    private accountService: AccountService,
+    private userService: UserService,
+    private _snackBar: MatSnackBar,
   ) {}
 
   frmUser: FormGroup;
+  changePasswordForm: FormGroup;
+  isEdit = false;
 
   ngOnInit(): void {
     this.init();
@@ -25,48 +34,68 @@ export class UserDataComponent implements OnInit {
 
   private buildForm(): void {
     this.frmUser = this.formBuilder.group({
-        id: [null, Validators.nullValidator],
-        name: [null, Validators.required],
-        username: [null, [Validators.required]],
-        email: [null, Validators.required, Validators.email],
-        password: [null, Validators.required],
-        birthdate: [null, Validators.required]
+      id: [null, Validators.nullValidator],
+      name: [null, Validators.required],
+      username: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, Validators.nullValidator],
+      birthDate: [null, Validators.required]
     });
+
+    this.changePasswordForm = this.formBuilder.group({
+      userId: [null, Validators.nullValidator],
+      previousPassword: [null, Validators.required],
+      newPassword: [null, Validators.required]
+    });
+
+    this.changePasswordForm.get('userId').setValue(this.accountService.currentUser.id);
   }
 
   save(): void{
-    // if (this.frmUser.controls.id.value === null) {
-    //     this._userService.insert(this.frmUser.getRawValue()).toPromise().then(resul => {
-    //         if (!resul.didError) {
-    //             this.frmUser.controls.id.setValue(resul.data.id);
-    //             this._userPagesService.globalService.notification.success('Usuário inserido com sucesso');
-    //         }
-    //     }, error => {
-    //         this._userPagesService.globalService.errorMessage(error);
-    //     });
-    // } else {
-    //     this._userService.update(this.frmUser.getRawValue()).toPromise().then(resul => {
-    //         if (!resul.didError) {
-    //             this._userPagesService.globalService.notification.success('Usuário atualizado com sucesso');
-    //         }
-    //     }, error => {
-    //         this._userPagesService.globalService.errorMessage(error);
-    //     });
-    }
+    if (this.frmUser.controls.id.value === null) {
+        this.accountService.register(this.frmUser.getRawValue()).toPromise().then(resul => {
+          if(resul){
+            this._snackBar.open("Usuário inserido com sucesso!", null, {
+              duration: 2000,
+            });
+          }
+        }, error => {
+          this._snackBar.open(error.error.message, null, {
+            duration: 4000,
+          });
+        });
+    } else {
+        this.userService.update(this.frmUser.getRawValue()).toPromise().then(resul => {
 
-    edit(): void {
-      // this.route.firstChild.params.subscribe(params => {
-      //     this._userPagesService.paramId = +params.id;
-      // });
-      // if (this._userPagesService.paramId) {
-      //     await this._userService.get(this._userPagesService.paramId).toPromise().then(result => {
-      //         if (!result.didError && result.data !== null) {
-      //             this._userPagesService.model = result.data;
-      //             this.frmUser.patchValue(result.data);
-      //         }
-      //     });
-      // }
+  
+        }, error => {
+
+        });
     }
+  }
+
+  changePassword(){
+    this.userService.changePassword(this.changePasswordForm.getRawValue()).toPromise().then(resul => {
+      console.log(resul);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  edit(){
+    if(this.accountService.currentUser.id != null){
+      this.isEdit = true;
+      this.loadUser();
+    }
+    else
+      this.isEdit = false;
+  }
+  
+  loadUser(){
+    this.userService.getById(this.accountService.currentUser.id).subscribe(resul => {
+      this.frmUser.patchValue(resul);
+    });
+  }
 
     limpar(): void{
       this.frmUser.reset();

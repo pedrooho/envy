@@ -12,13 +12,6 @@
     justify-content: center;
   }
   
-  .error {
-    padding: 16px;
-    width: 300px;
-    color: white;
-    background-color: red;
-  }
-  
   .button {
     display: flex;
     justify-content: flex-end;
@@ -36,7 +29,7 @@
     margin-right: auto; 
   }
   
-  a:link {
+  .error, a:link {
     margin-left: 15px;
     font-size: 13px;
     color: red;
