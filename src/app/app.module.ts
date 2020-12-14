@@ -13,7 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginButtonComponent } from './components/components/login-button/login-button.component';
 import { SignupButtonComponent } from './components/components/signup-button/signup-button.component';
 import { LogoutButtonComponent } from './components/components/logout-button/logout-button.component';
@@ -38,6 +38,7 @@ import { CreateTransactionComponent } from './pages/create-transaction/create-tr
 import { UserDataComponent } from './components/components/user-data/user-data.component';
 import { ReportComponent } from './pages/report/report.component';
 import {ChartsModule} from 'ng2-charts';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import {ChartsModule} from 'ng2-charts';
     ReactiveFormsModule,
     NgxCurrencyModule,
     ChartsModule,
+    MatSnackBarModule,
   ],
   bootstrap: [AppComponent],
 })

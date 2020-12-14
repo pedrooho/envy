@@ -1,7 +1,15 @@
 <div>
     <h1> SUPERMARKET ENVELOPE </h1>
+    <div class="row header">
+      <div class="col-10">
+        <p>Valor do envelope: </p>
+        <p>Valor gasto: </p>
+      </div>
+      <div class="col-1">
+        <button mat-raised-button (click)="openNewTransaction()">New transaction</button>
+      </div>      
+    </div>
 
-    <button mat-raised-button (click)="openNewTransaction()">New transaction</button>
     <table class="table table-hover">
         <thead class="thead-dark">
           <tr>

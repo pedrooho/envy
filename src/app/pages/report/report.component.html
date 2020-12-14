@@ -1,10 +1,33 @@
-<div>
-    <h1>Chart title</h1>
-    <div class="chart"> 
-        <canvas baseChart 
-                [data] = "pieChartData" 
-                [labels] = "pieChartLabels" 
-                [chartType] = "pieChartType"> 
-        </canvas> 
+<div class="row">
+    <div class="col-6">
+        <h1>Expected</h1>
+        <div class="chart"> 
+            <canvas baseChart 
+                    [data] = "pieChartData" 
+                    [labels] = "pieChartLabels" 
+                    [chartType] = "pieChartType"> 
+            </canvas> 
+        </div>
+    </div>
+    <div class="col-6">
+        <h1>Reality</h1>
+        <div class="chart"> 
+            <canvas baseChart 
+                    [data] = "pieChartData" 
+                    [labels] = "pieChartLabels" 
+                    [chartType] = "pieChartType"> 
+                    
+            </canvas> 
+        </div>
     </div>
 </div>
+<div class="row chart">
+    <h1>Expected vs Reality</h1>
+    <canvas baseChart
+            [chartType]="chartType"
+            [datasets]="chartDatasets"
+            [labels]="chartLabels"
+            [legend]="true">
+    </canvas>
+</div>
+

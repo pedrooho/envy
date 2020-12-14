@@ -16,4 +16,13 @@ export class ReportComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public chartType: string = 'bar';
+
+  public chartDatasets: Array<any> = [
+    { data: [65, 59, 157, 81, 56, 55, 40], label: 'My First dataset' },
+    { data: [11, 12, 157, 13, 14, 15, 16], label: 'My Second dataset' },
+  ];
+  
+  public chartLabels: Array<any> = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+  
 }

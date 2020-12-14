@@ -1,6 +1,6 @@
 <div class="body row">
     <div class="col-6">
-        <form [formGroup]="frmUser" class="p-grid form-group" onSubmit={this.save}>
+        <form [formGroup]="frmUser" class="p-grid form-group">
             <div class="col-10">
                 <mat-form-field class="inputLength">
                     <input type="text" matInput placeholder="Name" formControlName="name" maxlength="150"
@@ -31,14 +31,14 @@
             </div>
             <div class="col-10">
                 <mat-form-field class="inputLength">
-                    <input type="date" matInput placeholder="Birthdate" formControlName="birthdate">
+                    <input type="date" matInput placeholder="Birthdate" formControlName="birthDate">
                 </mat-form-field>
             </div>
         </form>
         <div class="bar-buttons col-10">
             <div class="button">
-                <button class="button" (click)="this.limpar()" mat-raised-button mat-button>Limpar</button>
-                <button class="button" mat-raised-button type="submit" mat-button>Save</button>
+                <button class="button" (click)="this.limpar()" mat-raised-button mat-button>Clean</button>
+                <button class="button" (click)="this.save()" mat-raised-button mat-button>Save</button>
             </div>
         </div>
     </div>

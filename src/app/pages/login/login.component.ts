@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AccountService} from '../../services/account.service';
 import {LoginModel} from '../../models/login.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,13 @@ import {LoginModel} from '../../models/login.models';
 })
 export class LoginComponent implements OnInit {
 
-  loggedIn = false;
   model = new LoginModel({});
+  error = null;
 
   constructor(
     public formBuilder: FormBuilder,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private router: Router) { }
 
     loginForm: FormGroup;
 
@@ -35,12 +37,18 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.accountService.login(this.loginForm.getRawValue()).subscribe(response => {
-      console.log(response);
-      this.loggedIn = true;
+    this.accountService.login(this.loginForm.getRawValue()).subscribe((res: Response) => {
+      console.log(res.headers.get('Authorization'));
+      this.accountService.loggedIn = true;
     }, error => {
       console.log(error);
+    }, () => {
+      console.log('done');
     });
   }
 
+
+
 }
+
+

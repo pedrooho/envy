@@ -23,3 +23,7 @@ svg {
     display: block;
     margin: auto;
   }
+
+.header{
+    margin: 25px;
+}
