@@ -38,7 +38,8 @@ import { CreateTransactionComponent } from './pages/create-transaction/create-tr
 import { UserDataComponent } from './components/components/user-data/user-data.component';
 import { ReportComponent } from './pages/report/report.component';
 import {ChartsModule} from 'ng2-charts';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {AlertifyService} from './services/alertify.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     NgxCurrencyModule,
     ChartsModule,
     MatSnackBarModule,
+  ],
+  providers: [
+    AlertifyService
   ],
   bootstrap: [AppComponent],
 })
