@@ -31,7 +31,7 @@ export class EnvelopesComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe((response) => {
       if (response) {
-        //this.pesquisar();
+        this.loadEnvelopes();
       }
     });
   }

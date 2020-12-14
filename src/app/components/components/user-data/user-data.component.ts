@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../../services/account.service';
 import { UserService } from '../../../services/user.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class UserDataComponent implements OnInit {
     public formBuilder: FormBuilder,
     private accountService: AccountService,
     private userService: UserService,
-    private _snackBar: MatSnackBar,
+    private alertify: AlertifyService,
   ) {}
 
   frmUser: FormGroup;
@@ -59,21 +59,16 @@ export class UserDataComponent implements OnInit {
     if (this.frmUser.controls.id.value === null) {
         this.accountService.register(this.frmUser.getRawValue()).toPromise().then(resul => {
           if(resul){
-            this._snackBar.open("Usuário inserido com sucesso!", null, {
-              duration: 2000,
-            });
+            this.alertify.success('User added successfully');
           }
         }, error => {
-          this._snackBar.open(error.error.message, null, {
-            duration: 4000,
-          });
+          this.alertify.error(error.message);
         });
     } else {
         this.userService.update(this.frmUser.getRawValue()).toPromise().then(resul => {
-
-  
+          this.alertify.success('User updated successfully');	
         }, error => {
-
+          this.alertify.error(error.message);
         });
     }
   }

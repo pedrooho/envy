@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountService } from 'src/app/services/account.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 @Component({
   selector: 'app-recover-password',
@@ -16,7 +16,7 @@ export class RecoverPasswordComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private _snackBar: MatSnackBar,
+    private alertify: AlertifyService,
   ) { }
 
   private buildForm(): void {
@@ -35,9 +35,7 @@ export class RecoverPasswordComponent implements OnInit {
         this.emailSend = true;
       }
     }, error => {
-      this._snackBar.open(error.error.message, null, {
-        duration: 4000,
-      });
+      this.alertify.error(error.message);
     });
   }
 

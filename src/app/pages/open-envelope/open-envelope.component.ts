@@ -2,8 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { EnvelopeService } from 'src/app/services/envelope.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { CreateEnvelopeComponent } from '../create-envelope/create-envelope.component';
 import { CreateTransactionComponent } from '../create-transaction/create-transaction.component';
 
 @Component({
@@ -23,6 +25,7 @@ export class OpenEnvelopeComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private envelopeService: EnvelopeService,
+    private alertify: AlertifyService,
     private transactionService: TransactionService, 
   ) { 
     this.route.params.subscribe(params => this.envelopeId = params['id']);
@@ -59,6 +62,22 @@ export class OpenEnvelopeComponent implements OnInit {
     });
   }
 
+  openEditEnvelope(){
+    const  dialogRef = this.dialog.open(CreateEnvelopeComponent, {
+      width: '500px',
+      height: 'auto',
+      data: {
+        envelopeId: this.envelopeId
+      },
+    });
+    
+    dialogRef.afterClosed().subscribe((response) => {
+      if (response) {
+        this.alertify.success('Transaction added successfully');
+      }
+    });
+  }
+
   edit(idTransaction: number) {
     const  dialogRef = this.dialog.open(CreateTransactionComponent, {
       width: '500px',
@@ -71,7 +90,7 @@ export class OpenEnvelopeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((response) => {
       if (response) {
-        //this.pesquisar();
+        this.loadTransactions();
       }
     });
   }

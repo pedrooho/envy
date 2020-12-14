@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { EnvelopeService } from 'src/app/services/envelope.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private envelopeService: EnvelopeService,
+    private alertify: AlertifyService
   ) { }
 
   public chartLabels = [];
@@ -58,8 +60,8 @@ export class ReportComponent implements OnInit {
     }
 
     this.chartDatasets = [
-      { data: this.pieChartDataReality, label: 'Reality' },
-      { data: this.pieChartDataExpected, label: 'Expected' }
+      { data: this.pieChartDataReality, label: 'Spent' },
+      { data: this.pieChartDataExpected, label: 'Budget' }
     ]
 
     this.chartColors = [{
@@ -83,6 +85,8 @@ export class ReportComponent implements OnInit {
   search(){
     this.envelopeService.getByIdUser(this.accountService.currentUser.id).subscribe( resul => {
       this.setValuesChart(resul);
+    },error => {
+      this.alertify.error(error.message);
     });
   }
 }

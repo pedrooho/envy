@@ -22,7 +22,7 @@
     <br><br><br>
     <div *ngIf="chartLabels.length > 0"  class="row">
         <div class="col-6">
-            <h1>Expected</h1>
+            <h1>Spent</h1>
             <div class="chart">
                 <canvas baseChart [data]="pieChartDataExpected" [colors]="chartColors" [labels]="chartLabels"
                     [chartType]="pieChartType">
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="col-6">
-            <h1>Reality</h1>
+            <h1>Budget</h1>
             <div class="chart">
                 <canvas baseChart [data]="pieChartDataReality" [colors]="chartColors" [labels]="chartLabels"
                     [chartType]="pieChartType">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div *ngIf="chartLabels.length > 0" class="row chart">
-        <h1>Expected vs Reality</h1>
+        <h1>Spent X Budget</h1>
         <canvas baseChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [legend]="true">
         </canvas>
     </div>
