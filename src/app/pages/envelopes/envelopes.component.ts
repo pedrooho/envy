@@ -27,6 +27,9 @@ export class EnvelopesComponent implements OnInit {
     const  dialogRef = this.dialog.open(CreateEnvelopeComponent, {
       width: '500px',
       height: 'auto',
+      data: {
+        envelopeId: null
+      }
     });
     
     dialogRef.afterClosed().subscribe((response) => {
