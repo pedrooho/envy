@@ -40,7 +40,7 @@
         <div class="bar-buttons col-10">
             <div class="button">
                 <button class="button" (click)="this.limpar()" mat-raised-button mat-button>Clean</button>
-                <button class="button" (click)="this.save()" mat-raised-button mat-button>Save</button>
+                <button class="button" [disabled]="this.frmUser.invalid" (click)="this.save()" mat-raised-button mat-button>Save</button>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="bar-buttons col-10">
                 <div class="button">
-                    <button class="button" (click)="this.changePassword()" mat-raised-button mat-button>Save</button>
+                    <button class="button" [disabled]="this.changePasswordForm.invalid" (click)="this.changePassword()" mat-raised-button mat-button>Save</button>
                 </div>
             </div>
         </form>

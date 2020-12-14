@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EnvelopeService } from '../../services/envelope.service';
 import { TypeEnvelopeEnum } from '../../enum/type-envelope.enum'
@@ -15,20 +15,24 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 export class CreateEnvelopeComponent implements OnInit {
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private envelopeService: EnvelopeService,
-    private _snackBar: MatSnackBar,
     private accountService: AccountService,
     public dialogRef: MatDialogRef<CreateEnvelopeComponent>,
     private alertify: AlertifyService
-  ) { }
+  ) { 
+    this.envelopeId = this.data.envelopeId;
+  }
 
   envelopeTypeEnum = TypeEnvelopeEnum;
   createEnvelopeForm: FormGroup;
   flagGoal = false;
+  envelopeId;
 
   ngOnInit(): void {
     this.buildForm();
+    this.loadEnvelope();
   }
 
   buildForm(): void  {
@@ -42,7 +46,8 @@ export class CreateEnvelopeComponent implements OnInit {
       dueDate: [null, Validators.required],
       userId: [null, Validators.nullValidator]
     });
-    this.createEnvelopeForm.get('userId').setValue(this.accountService.currentUser.id);
+    this.createEnvelopeForm.get('userId').setValue(this.accountService.currentUser.id);      
+    this.createEnvelopeForm.get('id').setValue(this.envelopeId);
 
   }
 
@@ -54,11 +59,7 @@ export class CreateEnvelopeComponent implements OnInit {
     let envelope:any = this.createEnvelopeForm.value;
     if (this.createEnvelopeForm.controls.id.value === null) {
         this.envelopeService.create(envelope).toPromise().then(resul => {
-          if(resul){
-            this._snackBar.open("Envelope inserido com sucesso!", null, {
-              duration: 2000,
-            });
-          }
+          this.alertify.success('Envelope added successfully');
         }, error => {
           var errorMsg;
           if(error.subErrors != null){
@@ -70,8 +71,7 @@ export class CreateEnvelopeComponent implements OnInit {
         });
     } else {
         this.envelopeService.update(envelope).toPromise().then(resul => {
-
-  
+          this.alertify.success('Envelope updated successfully');  
         }, error => {
             var errorMsg;
             if(error.subErrors != null){
@@ -86,6 +86,14 @@ export class CreateEnvelopeComponent implements OnInit {
 
   setFlagGoal(value) {
     this.flagGoal = value;
+  }
+
+  loadEnvelope(){
+    if(this.envelopeId){
+      this.envelopeService.getById(this.envelopeId).subscribe(resul => {
+        this.createEnvelopeForm.patchValue(resul);
+      });      
+    }
   }
 
 }

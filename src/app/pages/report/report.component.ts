@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/services/account.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { EnvelopeService } from 'src/app/services/envelope.service';
 
 @Component({
@@ -9,9 +12,13 @@ import { EnvelopeService } from 'src/app/services/envelope.service';
 export class ReportComponent implements OnInit {
   lstEnvelopes: any;
   backgroundColor = [];
+  frmReport: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService,
     private envelopeService: EnvelopeService,
+    private alertify: AlertifyService
   ) { }
 
   public chartLabels = [];
@@ -27,14 +34,18 @@ export class ReportComponent implements OnInit {
     { data: [], label: '' },
   ];
 
-  ngOnInit(): void {
-    this.loadEnvelopes();
-  } 
-
-  loadEnvelopes(){
-    this.envelopeService.findAll().subscribe( resul => {
-      this.setValuesChart(resul);
+  private buildForm(): void {
+    this.frmReport = this.formBuilder.group({
+      userId: [null, Validators.required],
+      createdOnFrom: [null, Validators.required],
+      createdOnTo: [null, Validators.required],
     });
+
+    this.frmReport.get('userId').setValue(this.accountService.currentUser.id);
+  }
+
+  ngOnInit(): void {
+    this.buildForm();
   }
 
   setValuesChart(lstEnvelopes: any){
@@ -49,8 +60,8 @@ export class ReportComponent implements OnInit {
     }
 
     this.chartDatasets = [
-      { data: this.pieChartDataReality, label: 'Reality' },
-      { data: this.pieChartDataExpected, label: 'Expected' }
+      { data: this.pieChartDataReality, label: 'Spent' },
+      { data: this.pieChartDataExpected, label: 'Budget' }
     ]
 
     this.chartColors = [{
@@ -69,5 +80,15 @@ export class ReportComponent implements OnInit {
         cor += hexadecimais[Math.floor(Math.random() * 16)];
     }
     return cor;
+  }
+
+  search(){
+    this.envelopeService.getByIdUser(this.accountService.currentUser.id).subscribe( resul => {
+      this.setValuesChart(resul);
+    },error => {
+      this.alertify.error(error.message);
+    });
+  }
 }
-}
+
+

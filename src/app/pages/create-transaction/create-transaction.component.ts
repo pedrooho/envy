@@ -56,7 +56,6 @@ export class CreateTransactionComponent implements OnInit {
     if (this.createTransactionForm.controls.id.value === null) {
         this.transactionService.create(this.createTransactionForm.value).toPromise().then(resul => {
           if(resul){
-            this.alertify.success('Transaction added successfully');
             this.dialogRef.close(true);
           }
         }, error => {
