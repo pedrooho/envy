@@ -42,7 +42,8 @@ export class CreateTransactionComponent implements OnInit {
       amount: [null, Validators.required],
       createdOn: [null, Validators.required]
     });
-    this.createTransactionForm.get('envelopeId').setValue(this.idEnvelope);
+    if(this.idEnvelope != undefined)
+      this.createTransactionForm.get('envelopeId').setValue(this.idEnvelope);
     if(this.data.idTransaction != undefined && this.idTransaction != null)
       this.createTransactionForm.get('id').setValue(this.idTransaction);
 

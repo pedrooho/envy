@@ -46,8 +46,9 @@ export class CreateEnvelopeComponent implements OnInit {
       dueDate: [null, Validators.required],
       userId: [null, Validators.nullValidator]
     });
-    this.createEnvelopeForm.get('userId').setValue(this.accountService.currentUser.id);      
-    this.createEnvelopeForm.get('id').setValue(this.envelopeId);
+    this.createEnvelopeForm.get('userId').setValue(this.accountService.currentUser.id);
+    if(this.envelopeId != null)      
+      this.createEnvelopeForm.get('id').setValue(this.envelopeId);
 
   }
 
@@ -89,7 +90,7 @@ export class CreateEnvelopeComponent implements OnInit {
   }
 
   loadEnvelope(){
-    if(this.envelopeId){
+    if(this.envelopeId != null){
       this.envelopeService.getById(this.envelopeId).subscribe(resul => {
         this.createEnvelopeForm.patchValue(resul);
       });      

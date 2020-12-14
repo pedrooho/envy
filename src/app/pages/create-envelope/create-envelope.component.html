@@ -1,6 +1,6 @@
 <div class="row">
-    <h1 *ngIf="envelopeId == undefined">New envelope</h1>
-    <h1 *ngIf="envelopeId != undefined">Edit envelope</h1>
+    <h1 *ngIf="envelopeId == null">New envelope</h1>
+    <h1 *ngIf="envelopeId != null">Edit envelope</h1>
     <div class="col-12">
         <form [formGroup]="createEnvelopeForm" class="p-grid form-group">
             <div class="col-12">
